@@ -3,56 +3,81 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Editable notes on how genes are linked to diseases." />
-  <title>How Do We Link Genes to Disease?</title>
+  <meta name="description" content="A simple blog about genetics, disease biology, and bioinformatics." />
+  <title>Gene Notes | A Simple Biology Blog</title>
   <style>
     :root {
-      --bg: #f6f7fb;
+      --bg: #f7f8fc;
       --surface: #ffffff;
-      --surface-soft: #eef2ff;
-      --text: #172033;
-      --muted: #5d687d;
-      --primary: #4f46e5;
+      --text: #1d2433;
+      --muted: #667085;
+      --primary: #5146e5;
       --primary-dark: #3730a3;
-      --border: #dfe3ee;
-      --success: #087f5b;
-      --warning: #a16207;
-      --shadow: 0 12px 30px rgba(27, 35, 67, 0.08);
-      --radius: 18px;
+      --border: #e5e7eb;
+      --soft: #eef2ff;
+      --max-width: 980px;
+      --radius: 16px;
+      --shadow: 0 10px 28px rgba(20, 28, 60, 0.07);
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.65;
       color: var(--text);
       background: var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
     }
 
     a { color: var(--primary-dark); }
+    img { max-width: 100%; display: block; }
 
     .container {
-      width: min(1120px, calc(100% - 2rem));
+      width: min(var(--max-width), calc(100% - 2rem));
       margin: 0 auto;
     }
 
+    header {
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand {
+      color: var(--text);
+      font-size: 1.2rem;
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    nav a {
+      margin-left: 1rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-decoration: none;
+    }
+
+    nav a:hover { color: var(--primary); }
+
     .hero {
-      color: white;
       padding: 5rem 0 4rem;
-      background:
-        radial-gradient(circle at top right, rgba(129, 140, 248, 0.45), transparent 34rem),
-        linear-gradient(135deg, #1e1b4b, #3730a3 55%, #4f46e5);
+      background: linear-gradient(135deg, #eef2ff, #ffffff 65%);
     }
 
     .eyebrow {
-      margin: 0 0 0.75rem;
-      color: #c7d2fe;
+      margin: 0 0 0.7rem;
+      color: var(--primary);
       font-size: 0.78rem;
-      font-weight: 800;
+      font-weight: 850;
       letter-spacing: 0.14em;
       text-transform: uppercase;
     }
@@ -60,421 +85,230 @@
     h1, h2, h3 { line-height: 1.2; }
 
     h1 {
-      max-width: 800px;
+      max-width: 720px;
       margin: 0;
-      font-size: clamp(2.3rem, 6vw, 4.5rem);
-      letter-spacing: -0.04em;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      letter-spacing: -0.05em;
     }
 
     .hero p {
-      max-width: 750px;
+      max-width: 650px;
       margin: 1.25rem 0 0;
-      color: #e0e7ff;
+      color: var(--muted);
       font-size: 1.15rem;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      margin-top: 2rem;
     }
 
     .button {
       display: inline-block;
+      margin-top: 1.5rem;
       padding: 0.75rem 1rem;
-      border: 1px solid transparent;
       border-radius: 999px;
-      font-weight: 750;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .button-primary { color: #312e81; background: white; }
-    .button-secondary { color: white; border-color: rgba(255,255,255,.35); background: transparent; }
-
-    .layout {
-      display: grid;
-      grid-template-columns: 250px 1fr;
-      gap: 2rem;
-      align-items: start;
-      margin: 2rem auto 4rem;
-    }
-
-    .sidebar {
-      position: sticky;
-      top: 1rem;
-      padding: 1.2rem;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: var(--surface);
-      box-shadow: var(--shadow);
-    }
-
-    .sidebar h2 {
-      margin-top: 0;
-      font-size: 1rem;
-    }
-
-    .sidebar a {
-      display: block;
-      padding: 0.45rem 0;
-      color: var(--muted);
-      text-decoration: none;
-    }
-
-    .sidebar a:hover { color: var(--primary); }
-
-    main { min-width: 0; }
-
-    section {
-      margin-bottom: 2rem;
-      padding: clamp(1.25rem, 3vw, 2rem);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: var(--surface);
-      box-shadow: var(--shadow);
-    }
-
-    section h2 { margin-top: 0; font-size: 1.8rem; }
-    section h3 { margin-bottom: 0.35rem; }
-
-    .lead {
-      color: var(--muted);
-      font-size: 1.08rem;
-    }
-
-    .callout {
-      margin: 1.25rem 0;
-      padding: 1rem 1.1rem;
-      border-left: 5px solid var(--primary);
-      border-radius: 10px;
-      background: var(--surface-soft);
-    }
-
-    .callout strong { color: var(--primary-dark); }
-
-    .evidence-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-      margin-top: 1.25rem;
-    }
-
-    .evidence-card {
-      padding: 1.15rem;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: #fcfcff;
-    }
-
-    .evidence-card .number {
-      display: inline-grid;
-      width: 2rem;
-      height: 2rem;
-      place-items: center;
-      margin-bottom: 0.6rem;
-      border-radius: 50%;
       color: white;
       background: var(--primary);
-      font-weight: 800;
+      font-weight: 750;
+      text-decoration: none;
     }
 
-    .evidence-card p { margin-bottom: 0; color: var(--muted); }
+    .button:hover { background: var(--primary-dark); }
 
-    .table-wrap { overflow-x: auto; }
+    main { padding: 3rem 0; }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 650px;
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
     }
 
-    th, td {
-      padding: 0.85rem;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-      vertical-align: top;
+    .section-heading h2 { margin: 0; }
+    .section-heading p { margin: 0; color: var(--muted); }
+
+    .posts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.2rem;
     }
 
-    th { color: var(--primary-dark); background: #f5f6ff; }
+    .post-card {
+      padding: 1.4rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .post-card h3 { margin: 0.7rem 0 0.5rem; font-size: 1.35rem; }
+    .post-card p { margin: 0; color: var(--muted); }
+
+    .post-meta {
+      color: var(--primary);
+      font-size: 0.83rem;
+      font-weight: 750;
+    }
+
+    .read-more {
+      display: inline-block;
+      margin-top: 1rem;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .panel {
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .panel h2 { margin-top: 0; }
+    .panel p { color: var(--muted); }
 
     .tag {
       display: inline-block;
       margin: 0.2rem 0.25rem 0.2rem 0;
-      padding: 0.25rem 0.55rem;
+      padding: 0.25rem 0.6rem;
       border-radius: 999px;
-      color: var(--success);
-      background: #e6fcf5;
+      color: var(--primary-dark);
+      background: var(--soft);
       font-size: 0.82rem;
       font-weight: 700;
     }
 
-    .workflow {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      align-items: center;
-      margin-top: 1.2rem;
-    }
-
-    .step {
-      padding: 0.7rem 0.85rem;
-      border: 1px solid #c7d2fe;
-      border-radius: 12px;
-      color: #312e81;
-      background: #eef2ff;
-      font-weight: 700;
-    }
-
-    .arrow { color: var(--muted); font-weight: 900; }
-
-    .editable {
-      min-height: 90px;
-      padding: 1rem;
-      border: 1px dashed #a5b4fc;
-      border-radius: 12px;
-      outline: none;
-      background: #fafaff;
-    }
-
-    .editable:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
-    }
-
     footer {
-      padding: 2rem 0 3rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
       color: var(--muted);
       text-align: center;
+      background: white;
     }
 
-    @media (max-width: 780px) {
-      .layout { grid-template-columns: 1fr; }
-      .sidebar { position: static; }
-      .evidence-grid { grid-template-columns: 1fr; }
+    @media (max-width: 700px) {
+      .nav { align-items: flex-start; flex-direction: column; }
+      nav a { margin: 0 1rem 0 0; }
+      .posts, .about { grid-template-columns: 1fr; }
+      .section-heading { align-items: flex-start; flex-direction: column; }
     }
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="container">
-      <p class="eyebrow">Genetics • Disease biology • Evidence evaluation</p>
-      <h1>How do we decide which genes are related to a disease?</h1>
-      <p>
-        A practical framework for connecting genes to diseases using genetic evidence,
-        biological mechanisms, experiments, and patient data.
-      </p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="#framework">Explore the framework</a>
-        <a class="button button-secondary" href="#notes">Add your notes</a>
-      </div>
+  <header>
+    <div class="container nav">
+      <!-- Change this to your blog name -->
+      <a class="brand" href="index.html">Gene Notes</a>
+
+      <nav aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="#about">About</a>
+        <a href="mailto:your-email@example.com">Contact</a>
+      </nav>
     </div>
   </header>
 
-  <div class="container layout">
-    <aside class="sidebar" aria-label="Page navigation">
-      <h2>On this page</h2>
-      <a href="#core-idea">Core idea</a>
-      <a href="#framework">Evidence framework</a>
-      <a href="#evidence-table">Evidence table</a>
-      <a href="#example">Worked example</a>
-      <a href="#notes">My notes</a>
-      <a href="#references">References</a>
-    </aside>
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow">Genetics · Bioinformatics · Learning notes</p>
+      <!-- Edit this heading and introduction -->
+      <h1>Making biology easier to understand, one note at a time.</h1>
+      <p>
+        Short, clear explanations of genes, variants, disease mechanisms,
+        knowledge graphs, and computational biology.
+      </p>
+      <a class="button" href="#latest">Read the latest posts</a>
+    </div>
+  </section>
 
-    <main>
-      <section id="core-idea">
-        <h2>The core idea</h2>
-        <p class="lead">
-          We do not usually decide that a gene causes a disease from one observation.
-          We build a case by combining several independent types of evidence.
-        </p>
-        <div class="callout">
-          <strong>Think of it as a chain of evidence:</strong>
-          a variant is found in affected people, it follows the expected inheritance pattern,
-          it changes the gene or protein, and experiments show that the change disrupts a
-          biologically relevant process.
-        </div>
+  <main class="container">
+    <section id="latest">
+      <div class="section-heading">
+        <h2>Latest posts</h2>
+        <p>Replace these sample cards with your own articles.</p>
+      </div>
+
+      <div class="posts">
+        <!-- Copy and edit this article card for each new post -->
+        <article class="post-card">
+          <div class="post-meta">August 16, 2026 · Genetics</div>
+          <h3><a href="posts/how-genes-are-linked.html">How do we know a gene is related to a disease?</a></h3>
+          <p>
+            A beginner-friendly explanation of linkage, variants, inheritance,
+            biological plausibility, and functional evidence.
+          </p>
+          <a class="read-more" href="posts/how-genes-are-linked.html">Read post →</a>
+        </article>
+
+        <article class="post-card">
+          <div class="post-meta">August 15, 2026 · Ciliopathies</div>
+          <h3><a href="posts/arl13b-and-joubert-syndrome.html">ARL13B and Joubert syndrome</a></h3>
+          <p>
+            Understanding how ciliary localization, family genetics, and functional
+            experiments connect ARL13B to disease.
+          </p>
+          <a class="read-more" href="posts/arl13b-and-joubert-syndrome.html">Read post →</a>
+        </article>
+
+        <article class="post-card">
+          <div class="post-meta">August 12, 2026 · Bioinformatics</div>
+          <h3><a href="posts/knowledge-graphs.html">Why use knowledge graphs in biology?</a></h3>
+          <p>
+            A practical introduction to representing genes, diseases, pathways,
+            variants, and evidence as connected data.
+          </p>
+          <a class="read-more" href="posts/knowledge-graphs.html">Read post →</a>
+        </article>
+
+        <article class="post-card">
+          <div class="post-meta">August 10, 2026 · Notes</div>
+          <h3><a href="posts/weekly-notes.html">Weekly research notes</a></h3>
+          <p>
+            A lightweight place for observations, questions, useful papers,
+            debugging discoveries, and unfinished ideas.
+          </p>
+          <a class="read-more" href="posts/weekly-notes.html">Read post →</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="panel">
+        <h2>About this blog</h2>
+        <!-- Edit this paragraph -->
         <p>
-          The more independent evidence lines agree, the more confident we become that the
-          gene is truly related to the disease rather than merely nearby, correlated, or
-          biologically interesting.
-        </p>
-      </section>
-
-      <section id="framework">
-        <h2>Evidence framework</h2>
-        <div class="evidence-grid">
-          <article class="evidence-card">
-            <span class="number">1</span>
-            <h3>Human genetic evidence</h3>
-            <p>
-              Are rare or damaging variants in the gene enriched in affected individuals?
-              Do variants segregate with disease in families?
-            </p>
-          </article>
-
-          <article class="evidence-card">
-            <span class="number">2</span>
-            <h3>Inheritance pattern</h3>
-            <p>
-              Does the variant fit the suspected inheritance model—for example,
-              recessive, dominant, X-linked, or mitochondrial inheritance?
-            </p>
-          </article>
-
-          <article class="evidence-card">
-            <span class="number">3</span>
-            <h3>Population frequency</h3>
-            <p>
-              Is the variant rare enough to plausibly cause a rare disease?
-              A common variant is usually less likely to cause a severe rare disorder.
-            </p>
-          </article>
-
-          <article class="evidence-card">
-            <span class="number">4</span>
-            <h3>Biological plausibility</h3>
-            <p>
-              Is the gene expressed in relevant cells? Is its protein located in the right
-              cellular compartment or involved in a relevant pathway?
-            </p>
-          </article>
-
-          <article class="evidence-card">
-            <span class="number">5</span>
-            <h3>Functional experiments</h3>
-            <p>
-              Does the variant alter protein activity, localization, stability, signaling,
-              splicing, or another measurable molecular function?
-            </p>
-          </article>
-
-          <article class="evidence-card">
-            <span class="number">6</span>
-            <h3>Model organisms and rescue</h3>
-            <p>
-              Does disrupting the gene reproduce a relevant phenotype? Can the normal gene
-              rescue the defect?
-            </p>
-          </article>
-        </div>
-
-        <div class="workflow" aria-label="Evidence workflow">
-          <span class="step">Variant discovered</span>
-          <span class="arrow">→</span>
-          <span class="step">Inheritance checked</span>
-          <span class="arrow">→</span>
-          <span class="step">Function tested</span>
-          <span class="arrow">→</span>
-          <span class="step">Disease mechanism supported</span>
-        </div>
-      </section>
-
-      <section id="evidence-table">
-        <h2>What each evidence type tells us</h2>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Evidence type</th>
-                <th>Main question</th>
-                <th>Example interpretation</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Linkage analysis</td>
-                <td>Does the disease track with a chromosomal region in a family?</td>
-                <td>The disease locus may lie within a particular linkage interval.</td>
-              </tr>
-              <tr>
-                <td>Variant segregation</td>
-                <td>Do affected relatives carry the variant and unaffected relatives not carry it?</td>
-                <td>The variant follows the expected family inheritance pattern.</td>
-              </tr>
-              <tr>
-                <td>Population data</td>
-                <td>How frequent is the variant in people without the disease?</td>
-                <td>A very rare variant is compatible with a rare recessive disease.</td>
-              </tr>
-              <tr>
-                <td>Expression and localization</td>
-                <td>Is the gene product present in disease-relevant cells and structures?</td>
-                <td>ARL13B in cilia supports a connection to a ciliary disorder.</td>
-              </tr>
-              <tr>
-                <td>Functional assay</td>
-                <td>Does the variant change a measurable molecular or cellular function?</td>
-                <td>The variant reduces signaling, trafficking, or protein activity.</td>
-              </tr>
-              <tr>
-                <td>Phenotypic rescue</td>
-                <td>Does restoring the normal gene improve the defect?</td>
-                <td>This provides strong evidence that the gene is causally involved.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section id="example">
-        <h2>Worked example: ARL13B and Joubert syndrome</h2>
-        <p>
-          In a consanguineous family, affected individuals had Joubert syndrome and were
-          homozygous for an ARL13B missense variant. Linkage analysis placed the disease locus
-          in a region containing ARL13B. The variant was rare, altered an amino acid in the
-          protein, and fit the known biology of ARL13B as a ciliary protein.
+          This is a personal learning and research blog about computational biology.
+          I use it to explain difficult concepts, document research ideas, and connect
+          evidence across genetics, disease biology, and biomedical data.
         </p>
         <p>
-          Additional functional and model-organism experiments supported disruption of ciliary
-          structure or signaling. The conclusion came from the combination of evidence—not
-          from expression or localization alone.
+          The goal is not to make every topic simple by removing detail. It is to make
+          the structure of the reasoning visible.
         </p>
-        <div>
-          <span class="tag">Rare variant</span>
-          <span class="tag">Homozygous</span>
-          <span class="tag">Family segregation</span>
-          <span class="tag">Ciliary localization</span>
-          <span class="tag">Functional support</span>
-        </div>
-      </section>
+      </div>
 
-      <section id="notes">
-        <h2>My editable notes</h2>
-        <p class="lead">Click inside the boxes and replace the placeholder text.</p>
-
-        <h3>Question I am trying to answer</h3>
-        <div class="editable" contenteditable="true">
-          Write your question here...
-        </div>
-
-        <h3>Important evidence</h3>
-        <div class="editable" contenteditable="true">
-          Add papers, variants, experiments, or observations here...
-        </div>
-
-        <h3>My interpretation</h3>
-        <div class="editable" contenteditable="true">
-          Explain how the evidence connects the gene to the disease...
-        </div>
-      </section>
-
-      <section id="references">
-        <h2>References to add</h2>
-        <ul>
-          <li><a href="https://pubmed.ncbi.nlm.nih.gov/18674751/" target="_blank" rel="noopener">Cantagrel et al. 2008 — ARL13B and Joubert syndrome</a></li>
-          <li><a href="https://www.ncbi.nlm.nih.gov/books/NBK1325/" target="_blank" rel="noopener">GeneReviews — Joubert syndrome</a></li>
-          <li><a href="https://docs.github.com/en/pages" target="_blank" rel="noopener">GitHub Pages documentation</a></li>
-        </ul>
-      </section>
-    </main>
-  </div>
+      <div class="panel">
+        <h2>Topics</h2>
+        <span class="tag">Genetics</span>
+        <span class="tag">Variants</span>
+        <span class="tag">Cilia</span>
+        <span class="tag">GWAS</span>
+        <span class="tag">Knowledge graphs</span>
+        <span class="tag">Biomedical NLP</span>
+        <span class="tag">Python</span>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <div class="container">
-      <p>Editable educational template • Replace this footer with your name, project, or lab.</p>
+      <!-- Replace with your name and year -->
+      <p>© 2026 Your Name · Built with plain HTML and CSS</p>
     </div>
   </footer>
 </body>
